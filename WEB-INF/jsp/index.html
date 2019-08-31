@@ -1,0 +1,160 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no">
+    <title>CRM</title>
+    <link rel="stylesheet" href="../../css/foundation.min.css" />
+    <link rel="stylesheet" href="../../css/normalize.css">
+    <link rel="stylesheet" href="../../css/index.css" />
+    <link href="../../css/bootstrap.min.css" rel="stylesheet" />
+	<link href="../../css/metisMenu.min.css" rel="stylesheet" />
+	<link href="../../css/dataTables.bootstrap.css" rel="stylesheet" />
+	<link href="../../css/sb-admin-2.css" rel="stylesheet" />
+	<link href="../../css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/boot-crm.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <!-- 右侧上面导航栏--用户信息 -->
+    <ul class="nav navbar-top-links navbar-right">
+        <!-- 用户信息和系统设置 start -->
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#"> 
+              <i class="fa fa-user fa-fw"></i>
+              <i class="fa fa-caret-down"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-user">
+              <li><a href="#"><i class="fa fa-user fa-fw"></i>
+                             用户：${USER_SESSION.user_name}
+                  </a>
+              </li>
+              <li><a href="#"><i class="fa fa-gear fa-fw"></i> 系统设置</a></li>
+              <li class="divider"></li>
+              <li>
+                  <a href="${pageContext.request.contextPath }/logout.action">
+                  <i class="fa fa-sign-out fa-fw"></i>退出登录
+                  </a>
+              </li>
+          </ul> 
+        </li>
+        <!-- 用户信息和系统设置结束 -->
+        </ul>
+    <!--left Menu-->
+    <div class="large-2 columns">
+        <div>
+        	<img src="../../images/logo.png"/>
+        </div>
+        
+        <ul class="menu-list">
+            <li data-icon="work-summary1" data-code="table11" class="selected">
+                <img src="../../images/work-plan.png" />
+                <span>表格处理1</span>
+            </li>
+            <li data-icon="work-summary1" data-code="table2">
+                <img src="../../images/work-summary.png" />
+                <span>表格处理2</span>
+            </li>
+            <li data-icon="work-summary1" data-code="table3">
+                <img src="../../images/work-summary.png" />
+                <span>表格处理3</span>
+            </li>
+            <li data-icon="work-summary1" data-code="table4">
+                <img src="../../images/work-summary.png" />
+                <span>表格处理4</span>
+            </li>
+            <li data-icon="work-summary1" data-code="table5">
+                <img src="../../images/work-summary.png" />
+                <span>表格处理5</span>
+            </li>
+            <li data-icon="work-summary1" data-code="table6">
+                <img src="../../images/work-summary.png" />
+                <span>表格处理6</span>
+            </li>
+        </ul>
+    </div>
+
+    <!--right content-->
+    <div class="large-10 columns content"> </div>
+
+<!--footer-->
+<!-- <footer class="">
+    <div class="large-12 columns">
+        <hr/>
+        <div class="row">
+            <div class="large-6 columns">
+                <p>© Copyright no one at all. Go to town.</p>
+            </div>
+            <div class="large-6 columns">
+                <ul class="inline-list right">
+                    <li><a href="#">Section 1</a></li>
+                    <li><a href="#">Section 2</a></li>
+                    <li><a href="#">Section 3</a></li>
+                    <li><a href="#">Section 4</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer> -->
+</body>
+<script src="../../js/jquery.js"></script>
+
+<script type="text/javascript">
+$(function(){
+    var code = $(".menu-list .selected").attr("data-code");
+    var selectedLi = $(".menu-list .selected");
+
+    selectedLi.css({
+    	background:"#16171c",
+    	color:"#ecedf1"
+    });
+
+    selectedLi.find("img").attr("src","../../images/work-summary1.png");
+    // selectedLi.find("img").attr("src","../../images/" + code + "1.png");
+
+    $.ajax({
+        url: code + ".html",
+        type:"get",
+        data:{
+            code:code
+        },
+        async:false,
+        dataType:"html",
+        success:function(data){
+            $(".content").html(data)
+        }
+    });
+
+    $(".menu-list li").click(function(){
+        if($(this).hasClass("selected")==false){
+            $(this).addClass("selected").css({
+                background:"#16171c",
+                color:"#ecedf1"
+            }).siblings().removeClass("selected").css({
+                background:"#202028",
+                color:"#71747b"
+            });
+
+            var code = $(this).attr("data-code");
+            $(".menu-list li").each(function(){
+            	$(this).find("img").attr("src","../../images/work-plan.png");
+            	// $(this).find("img").attr("src","../../images/" +$(this).attr("data-code")+ ".png");
+            });
+
+            $(this).find("img").attr("src","../../images/work-summary1.png");
+            // $(this).find("img").attr("src","../../images/" +$(this).attr("data-icon") + "work-summary1.png");
+            
+            $.ajax({
+                url:code + ".html",
+                type:"get",
+                dataType:"html",
+                async:false,
+                success:function(data){
+                    $(".content").html(data);
+                }
+            })
+        }
+    });
+});
+
+</script>
+</html>

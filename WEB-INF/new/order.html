@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>客户管理-BootCRM</title>
+    <meta content="MSHTML 6.00.2600.0" name=GENERATOR>
+	<!-- 引入css样式文件 -->
+	<!-- Bootstrap Core CSS -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet" />
+	<!-- MetisMenu CSS -->
+	<!-- <link href="../../css/metisMenu.min.css" rel="stylesheet" /> -->
+	<!-- DataTables CSS -->
+	<link href="../../css/dataTables.bootstrap.css" rel="stylesheet" />
+	<!-- Custom CSS -->
+	<!-- <link href="../../css/sb-admin-2.css" rel="stylesheet" /> -->
+	<!-- Custom Fonts -->
+	<!-- <link href="../../css/font-awesome.min.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="../../css/boot-crm.css" rel="stylesheet" type="text/css" /> -->
+    <style>
+        a.disabled {
+            cursor: not-allowed;
+        }
+        h5{
+            padding: 0;
+            margin: 0;
+        }
+        #page-wrapper1 .row .col-lg-12 .page-header{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+     <!-- 客户列表查询部分  start-->
+     <div id="page-wrapper1">
+        <div class="panel panel-default" style='padding:5px 0 0 5px;margin-bottom:5px' id='indexusero'>
+                <div class="panel-body" style='padding:5px 0 0 5px'>
+                    <form class="form-inline" id='indexuser'>
+                        <div class="form-group" >
+                            <label for="customerName" >客户ID</label> 
+                            <input type="text" class="form-control" id="customerName" name="custName" />        
+                        </div>
+                        <button type="button" class="btn btn-primary btn-indexuser">查询</button>
+                    </form>
+                </div>
+        </div>
+        <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default" style='width:1100px'>
+                        <div class="panel-heading">order信息列表</div>
+                        <!-- /.panel-heading -->
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <!-- rbcust_id -->
+                                    <th width='10%'>_id</th>
+                                    <th width='10%'>_name</th>
+                                    <th width='10%'>_url</th>
+                                    <th width='10%'>_account</th>
+                                    <th width='10%'>_time</th>
+                                    <th width='10%'>_shoe</th>
+                                    <th width='10%'>_code</th>
+                                    <th width='10%'>_size</th>
+                                    <th width='10%'>_price</th>
+                                    <th width='10%'>_pay</th>
+                                    <th width='15%'>opt</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- <c:forEach items="${page.rows}" var="row">
+                                    <tr>
+                                        <td>$</td>
+                                        <td>$</td>
+                                        <td>$</td>
+                                        <td>$</td>
+                                        <td>$</td>
+                                        <td>$</td>
+                                        <td>$</td>
+                                        <td>$</td>
+                                        <td>$</td>
+                                        <td>
+                                            <a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#customerEditDialog" onclick= "editCustomer(${row.cust_id})">修改</a>
+                                            <a href="#" class="btn btn-danger btn-xs" onclick="deleteCustomer(${row.cust_id})">删除</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach> -->
+                            </tbody>
+                        </table>
+                        <div class="col-md-12 text-right">
+                              <itheima:page url="${pageContext.request.contextPath }/customer/list.action" />
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+        </div>
+        <!-- 底部分页 -->
+        <div class="panel-footer">
+                <nav class='clearfix' aria-label="Page navigation">
+                    <!-- 分页器 -->
+                    <ul class="pagination pull-right">
+                      <li>
+                        <a href="#" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>
+                      <li><a href="#">1</a></li>
+                      <li><a href="#">/</a></li>
+                      <li><a href="#">1</a></li>
+                      <li>
+                        <a href="javascript:void(0)" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <!-- 新增按钮 -->
+                    <button data-toggle="modal" data-target="#addModal" class='btn btn-danger'>新增</button>
+                </nav>
+                </div>
+        </div>
+        </div>
+        <!-- 客户列表查询部分  end-->
+    </div>
+
+    <!-- 创建新信息 -->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">新增窗口</h4>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="addname">_name</label>
+                          <input type="text" name='name' class="form-control" id="addname" placeholder="请输入客户名称">
+                        </div>
+                        <div class="form-group">
+                          <label for="addurl">_url</label>
+                          <input type="text" name='url' class="form-control" id="addurl" placeholder="请输入订单照片地址">
+                        </div>
+                        <div class="form-group">
+                          <label for="addaccount">_account</label>
+                          <input type="text" name='account' class="form-control" id="addaccount" placeholder="请输入用户邮箱账号">
+                        </div>
+                        <div class="form-group">
+                          <label for="addtime">_time</label>
+                          <input type="text" name='time' class="form-control" id="addtime" placeholder="请输入订单时间">
+                        </div>
+                        <div class="form-group">
+                          <label for="addshoe">_shoe</label>
+                          <input type="text" name='shoe' class="form-control" id="addshoe" placeholder="请输入鞋款">
+                        </div>
+                        <div class="form-group">
+                          <label for="addcode">_code</label>
+                          <input type="text" name='code' class="form-control" id="addcode" placeholder="请输入鞋子货号">
+                        </div>
+                        <div class="form-group">
+                          <label for="addsize">_size</label>
+                          <input type="text" name='size' class="form-control" id="addsize" placeholder="请输入鞋子码数">
+                        </div>
+                        <div class="form-group">
+                          <label for="addprice">_price</label>
+                          <input type="text" name='price' class="form-control" id="addprice" placeholder="请输入鞋子价格">
+                        </div>
+                        <div class="form-group">
+                          <label for="addpay">_pay</label>
+                          <input type="text" name='pay' class="form-control" id="addpay" placeholder="请输入订单是否付款">
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary btn-primary-save" data-dismiss="modal">保&nbsp;存</button>
+                    </div>
+          </div>
+        </div>
+    </div>
+  
+    <!-- 修改信息 -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">修改窗口</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="addname">_name</label>
+                                <input type="text" name='name' class="form-control" id="addname" placeholder="请输入客户名称">
+                            </div>
+                            <div class="form-group">
+                                <label for="addurl">_url</label>
+                                <input type="text" name='url' class="form-control" id="addurl" placeholder="请输入订单照片地址">
+                            </div>
+                            <div class="form-group">
+                                <label for="addaccount">_account</label>
+                                <input type="text" name='account' class="form-control" id="addaccount" placeholder="请输入用户邮箱账号">
+                            </div>
+                            <div class="form-group">
+                                <label for="addtime">_time</label>
+                                <input type="text" name='time' class="form-control" id="addtime" placeholder="请输入订单时间">
+                            </div>
+                            <div class="form-group">
+                                <label for="addshoe">_shoe</label>
+                                <input type="text" name='shoe' class="form-control" id="addshoe" placeholder="请输入鞋款">
+                            </div>
+                            <div class="form-group">
+                                <label for="addcode">_code</label>
+                                <input type="text" name='code' class="form-control" id="addcode" placeholder="请输入鞋子货号">
+                            </div>
+                            <div class="form-group">
+                                <label for="addsize">_size</label>
+                                <input type="text" name='size' class="form-control" id="addsize" placeholder="请输入鞋子码数">
+                            </div>
+                            <div class="form-group">
+                                <label for="addprice">_price</label>
+                                <input type="text" name='price' class="form-control" id="addprice" placeholder="请输入鞋子价格">
+                            </div>
+                            <div class="form-group">
+                                <label for="addpay">_pay</label>
+                                <input type="text" name='pay' class="form-control" id="addpay" placeholder="请输入订单是否付款">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary btn-primary-save" data-dismiss="modal">保存</button>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <!-- 删除模态框 #removeModal -->
+    <div class="modal " id="removeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">删除窗口</h4>
+                    </div>
+                    <div class="modal-body">
+                    <h2>你真的想清楚了，删了可就没有了哦😁</h2>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal">确定</button>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+
+     <!-- jQuery -->
+     <script src="../../js/jquery-1.12.4.js"></script>
+     <!-- Bootstrap Core JavaScript -->
+     <script src="../../js/bootstrap.min.js"></script>
+     <!-- Metis Menu Plugin JavaScript -->
+     <script src="../../js/metisMenu.min.js"></script>
+     <!-- DataTables JavaScript -->
+     <script src="../../js/jquery.dataTables.min.js"></script>
+     <script src="../../js/dataTables.bootstrap.min.js"></script>
+     <!-- Custom Theme JavaScript -->
+     <script src="../../js/sb-admin-2.js"></script>
+     <script src="../../js/template-web.js"></script>
+     <!-- 定义模板 -->
+     <script type='text/html' id="template">
+         {{each list}}
+         <tr>
+         <td>{{$value.id}}</td>
+         <td>{{$value.name}}</td>
+         <td>{{$value.url}}</td>
+         <td>{{$value.account}}</td>
+         <td>{{$value.time}}</td>
+         <td>{{$value.shoe}}</td>
+         <td>{{$value.code}}</td>
+         <td>{{$value.size}}</td>
+         <td>{{$value.price}}</td>
+         <td>{{$value.pay}}</td>
+         <td>
+           <button type='button' class="btn btn-info btn-info-modify">修改</button>
+           <button data-toggle="modal" data-target="#removeModal" type="button" class="btn btn-danger">删除</button>
+         </td>
+         </tr>
+         {{/each}}
+     </script>
+     <script type="text/javascript">
+         var mypage = 1;
+         //定义获取数据的函数
+         function getData(){
+             $.ajax({
+                 url:'http://127.0.0.1/project/boot-crm/WEB-INF/classes/API/order/api_JSONP/findUsers.php',
+                 data:{
+                     pageNum:mypage,
+                     pageSize:5,
+                     // callback:''
+                 },
+                 dataType : "jsonp",
+                 jsonp: 'callback',
+                //  dataType:'text',
+                 success:function(data){
+                     // console.log(data);
+                     $('tbody').html(template('template',data));
+                     var totalPage = Math.ceil(data.total/data.pageSize);
+                     $('.pagination li:eq(3) a').html(totalPage);
+                     $('.pagination li:eq(1) a').html(data.pageNum);
+                     if(data.pageNum==totalPage)
+                     {
+                       $('a[aria-label="Next"]').addClass('disabled');
+                     }
+                     else
+                     {
+                       $('a[aria-label="Next"]').removeClass('disabled');
+                     }
+                     if(data.pageNum== 1)
+                     {
+                       $('a[aria-label="Previous"]').addClass('disabled');
+                     }
+                     else{
+                       $('a[aria-label="Previous"]').removeClass('disabled');
+                     }
+                 },
+                 error:function(){
+                     console.log('error')
+                 }
+             })
+             // console.log(2)
+         }
+ 
+         $(function(){
+             //打开网页就要首先获取一次数据
+             console.log(1)
+             getData();
+             //下一页获取新数据，当且仅当到最后一页时给右标签禁用
+             $('a[aria-label="Next"]').click(function(){
+               if($(this).hasClass('disabled'))
+               {
+                 alert('the last page!!!');
+                 return;
+               }
+               mypage++;
+               getData();
+             })
+             //上一页获取新数据，当且仅当到第一页时给左标签禁用
+             $('a[aria-label="Previous"]').click(function(){
+               if($(this).hasClass('disabled'))
+               {
+                 alert('the first page!!!');
+                 return;
+               }
+               mypage--;
+               getData();
+             })
+             //删除数据
+             var removeID;
+             $('tbody').on('click', '.btn-danger', function(){
+                 // console.log(1)
+               removeID = $(this).parent().siblings().first().html();
+               // console.log(removeID)
+             })
+             // 删除后确认删除
+             $("#removeModal .btn-success").click(function(){
+             //   $('#coverModal').modal('show');
+               // console.log(removeID)
+               $.ajax({
+                 url:'http://127.0.0.1/project/boot-crm/WEB-INF/classes/API/order/api_JSONP/removeUser.php',
+                 dataType:'jsonp',
+                 data:{
+                   id:removeID
+                 },
+                 success:function(data){
+                   // console.log(data)
+                   console.log('delete ok')
+                   getData();
+                 },
+                 error:function(){
+                     console.log('delete fail')
+                 }
+               })
+             })
+             //新增数据
+             $('#addModal .btn-primary-save').click(function () {
+                 //  开弹框
+                 // $('#coverModal').modal('show');
+                 console.log($("#addModal form").serialize());
+                 $.ajax({
+                     url: 'http://127.0.0.1/project/boot-crm/WEB-INF/classes/API/order/api_JSONP/saveUser.php',
+                     //   $("#addModal form").serialize() 格式化之后的结果是
+                     // key=value&key2=value2
+                     dataType:"text",
+                    //  dataType : "jsonp",
+                     jsonp:'callback',
+                     // contentType:"application/json;charset=utf-8",
+                     // dataType:"json",
+                     data: $("#addModal form").serialize(),
+ 
+                     success:function(data){
+                         // console.log('okkkk')
+                         // console.log(XMLHttpRequest.responseText);
+                         // console.log(typeof data)
+                         // var data1 = eval("("+data+")");
+                         console.log(data);
+                         // 获取数据
+                         getData();
+                     },
+ 
+                     
+                     error:function(XMLHttpRrequest,textStatus,errorThrown){
+                         // console.log(data)
+                         console.log(XMLHttpRequest.status);
+                         console.log(XMLHttpRequest.readyState);
+                         console.log(XMLHttpRequest.responseText);
+                         console.log(textStatus)
+                         console.log('error')
+                     }
+                 })
+             })
+             //修改数据
+             var editId;
+             $('tbody').on('click', '.btn-info-modify', function () {
+                 //  开弹框
+                 // $('#coverModal').modal('show');
+                 // 自己的 父亲的 兄弟 第一个 内容
+                 editId = $(this).parent().siblings().first().html();
+                 console.log(editId);
+                 // 获取对应的数据
+                 $.ajax({
+                   url: 'http://127.0.0.1/project/boot-crm/WEB-INF/classes/API/order/api_JSONP/getOneUser.php',
+                   dataType:'jsonp',
+                  //  dataType:"text",
+                   data: {
+                     id: editId
+                   },
+                   success: function (data) {
+                     console.log(data);
+                     //  关弹框
+                     // $('#coverModal').modal('hide');
+                     // 修改弹框中的 内容
+                     $('#editModal form input[name=name]').val(data.list[0].name);
+                     $('#editModal form input[name=url]').val(data.list[0].url);
+                     $('#editModal form input[name=account]').val(data.list[0].account);
+                     $('#editModal form input[name=time]').val(data.list[0].time);
+                     $('#editModal form input[name=shoe]').val(data.list[0].shoe);
+                     $('#editModal form input[name=code]').val(data.list[0].code);
+                     $('#editModal form input[name=size]').val(data.list[0].size);
+                     $('#editModal form input[name=price]').val(data.list[0].price);
+                     $('#editModal form input[name=pay]').val(data.list[0].pay);
+                     // 弹框
+                     $("#editModal").modal('show');
+                 },
+                 error:function(XMLHttpRrequest,textStatus,errorThrown){
+                             // console.log(data)
+                             console.log(XMLHttpRequest.status);
+                             console.log(XMLHttpRequest.readyState);
+                             console.log(XMLHttpRequest.responseText);
+                             console.log(textStatus)
+                             console.log('error')
+                         }
+               })
+                     })
+                 
+             // 修改后保存数据
+             $('#editModal .btn-primary-save').click(function () {
+                 //  开弹框
+                 //   $('#coverModal').modal('show');
+                 // 格式化表单
+                 var sendData = $('#editModal form').serialize();
+                 // key1=value1&key2=value2&id=editId;
+                 sendData += '&id=';
+                 sendData += editId;
+                 //   console.log(sendData);
+                 $.ajax({
+                     url: 'http://127.0.0.1/project/boot-crm/WEB-INF/classes/API/order/api_JSONP/modifyUser.php',
+                     data: sendData,
+                     dataType: 'jsonp',
+                    //  dataType: 'text',
+                     success: function (data) {
+                     //   console.log(data);
+                       getData();
+                     },
+                     error:function(){
+                         console.log('modify fail')
+                     }
+                 })  
+             })
+             //根据客户名称查询数据
+             $('#indexusero .btn-indexuser').click(function(){ 
+                 var indexID = $('#indexuser input').val();
+                 var mypage = 1;
+                 console.log(typeof indexID);
+                 $.ajax({
+                     url:'http://127.0.0.1/project/boot-crm/WEB-INF/classes/API/order/api_JSONP/indexUser.php',
+                     data:{
+                         id:indexID,
+                         // name:encodeURI(indexName),
+                         pageNum:mypage,
+                         pageSize:5,
+                     },
+                     // dataType:'text',
+                     dataType : "jsonp",
+                    //  jsonp: 'callback',
+                     success:function(data){
+                       console.log('index ok')
+                         console.log(data);
+                         $('tbody').html(template('template',data));
+                         var totalPage = Math.ceil(data.total/data.pageSize);
+                         $('.pagination li:eq(3) a').html(totalPage);
+                         $('.pagination li:eq(1) a').html(data.pageNum);
+                         if(data.pageNum==totalPage)
+                         {
+                           $('a[aria-label="Next"]').addClass('disabled');
+                         }
+                         else
+                         {
+                           $('a[aria-label="Next"]').removeClass('disabled');
+                         }
+                         if(data.pageNum== 1)
+                         {
+                           $('a[aria-label="Previous"]').addClass('disabled');
+                         }
+                         else{
+                           $('a[aria-label="Previous"]').removeClass('disabled');
+                         }
+                         },
+                     error:function(XMLHttpRrequest,textStatus,errorThrown){
+                            console.log('index error')
+                             // console.log(data)
+                             console.log(XMLHttpRequest.status);
+                             console.log(XMLHttpRequest.readyState);
+                             console.log(XMLHttpRequest.responseText);
+                             console.log(textStatus)
+                             console.log('error')
+                         }
+             })
+             })
+         })
+         </script>
+</body>
+</html>
